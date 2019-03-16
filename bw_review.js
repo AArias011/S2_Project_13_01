@@ -65,22 +65,39 @@ function lightStars(e) {
       //put a number in the input box when you hover over the stars
       document.getElementById("rating").value = starNumber + " star(s)";
       //the lit stars are unlit when you move the mouse off the stars
-      stars[i].addEventListener("mouseleave", turnOffStars);
-      stars[i].addEventListener("mouseleave", function () {
-            document.removeEventListener("mouseleave", turnOffStars);
+      e.target.addEventListener("mouseleave", turnOffStars);
+      e.target.addEventListener("click", function () {
+            e.target.removeEventListener("mouseleave", turnOffStars);
       });
 }
 
+// The purpose of this function is to unlight the stars when the user moves the mouse pointer off the star images
 function turnOffStars(e) {
-
+      var stars = document.querySelectorAll("span#stars img");
+      for (var i = 0; i < stars.length; i++) {
+            stars[i].src = "bw_star.png";
+      }
+      document.getElementById("rating").value = "";
 }
 
+// this function keeps a running total of the number of characters that the user has typed into the comment text area box
 function updateCount() {
-
-}
-
-function countCharacters(textStr) {
-
+      //that references the value stored in the comment text area box
+      var commentText = document.getElementById("comment").value;
+      // this calculates the number of characters in commentText
+      var charCount = countCharacters(commentText);
+      //references the wordCount input box
+      var wordCountBox = document.getElementById("wordCount");
+      //calculates the integer of the word count
+      wordCountBox.value = charCount + "/1000";
+      //this if statement makes the background color of the wordcount input box red when it goes over 1000. the else statement changes the background color of the input box to white when you go under 1000 word count.
+      if (charCount > 1000) {
+            wordCount.style.color = "white";
+            wordCount.style.backgroundColor = "red";
+      } else {
+            wordCount.style.color = "black";
+            wordCount.style.backgroundColor = "white";
+      }
 }
 
 /*=================================================================*/
